@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option java_package = "com.itis.grpc";
+
+message TemperatureRecord{
+  int32 id = 1;
+  float temperature = 2;
+  string scale = 3;
+}
+
+message GetByIdRequest{
+  int32 id = 1;
+}
+
+message GetAllByDeviceIdRequest{
+  int32 id = 1;
+}
+
+message TemperatureRecordRequest{
+  TemperatureRecord temperatureRecord = 1;
+}
+
+message TemperatureRecordResponse{
+  TemperatureRecord temperatureRecord = 1;
+}
+
+service TemperatureService{
+  rpc GetRecordById (GetByIdRequest) returns (TemperatureRecordResponse);
+  rpc SaveRecord (TemperatureRecordRequest) returns (TemperatureRecordResponse);
+  rpc GetAllByDeviceId(GetAllByDeviceIdRequest) returns (stream TemperatureRecordResponse);
+  rpc SaveAll (stream TemperatureRecordRequest) returns (stream TemperatureRecordResponse);
+}
